@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.eduardo.paselistar.apiPaseLista.ApiRetrofit;
 import com.example.eduardo.paselistar.apiPaseLista.PaseListaApiServicio;
 import com.example.eduardo.paselistar.modelos.AlumnosItem;
 import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
@@ -35,42 +36,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         listaAlumnosAdaptador = new ListaAlumnosAdaptador(this);
         recyclerView.setAdapter(listaAlumnosAdaptador);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://itculiacan.edu.mx/dadm/apipaselista/data/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        obtenerDatos();
-    }
 
-    private void obtenerDatos(){
-        PaseListaApiServicio servicio = retrofit.create(PaseListaApiServicio.class);
-        final Call<AlumnosRespuesta> listaAlumnosRespuesta = servicio.obtenerListaAlumnos();
-
-        listaAlumnosRespuesta.enqueue(new Callback<AlumnosRespuesta>() {
+        ApiRetrofit api = new ApiRetrofit();
+        api.obtenerListaAlumnos(new ApiRetrofit.ServiceCallBack() {
             @Override
-            public void onResponse(Call<AlumnosRespuesta> call, Response<AlumnosRespuesta> response) {
-                if(response.isSuccessful()){
-                    AlumnosRespuesta listaAlumnos = response.body();
-                    ArrayList<AlumnosItem> alumnos = listaAlumnos.getAlumnos();
-
-                    listaAlumnosAdaptador.agregarListaAlumnos(alumnos);
-
-                }else {
-                    Log.e(TAG, " onResponse "+response.errorBody());
-                }
+            public void respuestaRecibida(Object respuesta) {
+                listaAlumnosAdaptador.agregarListaAlumnos((ArrayList<AlumnosItem>)respuesta);
             }
-
             @Override
-            public void onFailure(Call<AlumnosRespuesta> call, Throwable t) {
+            public void fail(Throwable t) {
                 Log.e(TAG, " onFaailure " +t.getMessage());
             }
         });
     }
+
 }
