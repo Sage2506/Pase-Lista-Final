@@ -1,4 +1,4 @@
-package com.example.eduardo.paselistar.apiPaseLista;
+package com.example.eduardo.paselistar.modelos;
 
 import com.google.gson.annotations.SerializedName;
 

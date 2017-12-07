@@ -1,10 +1,10 @@
 package com.example.eduardo.paselistar.apiPaseLista;
 
-import android.app.Application;
 import android.util.Log;
 
 import com.example.eduardo.paselistar.modelos.AlumnosItem;
 import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
+import com.example.eduardo.paselistar.modelos.LoginRespuesta;
 
 import java.util.ArrayList;
 
@@ -61,9 +61,27 @@ public class ApiRetrofit {
         });
     }
 
-    /*public void login(final ServiceCallBack serviceCallBack){
+    public void login(final ServiceCallBack serviceCallBack){
+        Call<LoginRespuesta> loginRespuestaCall = servicio.loginUsuario(
+                "920",
+                "12345678"
+        );
 
-    }*/
+        loginRespuestaCall.enqueue(new Callback<LoginRespuesta>() {
+            @Override
+            public void onResponse(Call<LoginRespuesta> call, Response<LoginRespuesta> response) {
+                if(response.isSuccessful()){
+                    LoginRespuesta validacion = response.body();
+                    serviceCallBack.respuestaRecibida(validacion);
+                } else { Log.e(TAG, " onResponse " + response.errorBody());}
+            }
+
+            @Override
+            public void onFailure(Call<LoginRespuesta> call, Throwable t) {
+                    serviceCallBack.fail(t);
+            }
+        });
+    }
 
     public interface ServiceCallBack {
         void respuestaRecibida(Object respuesta);

@@ -1,6 +1,8 @@
 package com.example.eduardo.paselistar.apiPaseLista;
 
 import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
+import com.example.eduardo.paselistar.modelos.ClasesRespuesta;
+import com.example.eduardo.paselistar.modelos.LoginRespuesta;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,11 +21,19 @@ public interface PaseListaApiServicio {
             @Query("materia") String materia,
             @Query("grupo") String grupo
     );
-    /*@GET("validausuario.php")
+
+    @GET("validausuario.php")
     Call<LoginRespuesta> loginUsuario(
             @Query("usuario") String usuario,
             @Query("clave") String clave
 
-    );*/
+    );
+
+    @GET("obtienegrupos.php")
+    Call<ClasesRespuesta> obtenerlistaGrupos(
+            @Query("usuario") String usuario,
+            @Query("usuariovalida") String token,
+            @Query("periodoactual") String periodo
+    );
 
 }
