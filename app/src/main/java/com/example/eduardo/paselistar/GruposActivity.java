@@ -33,6 +33,20 @@ public class GruposActivity extends AppCompatActivity {
 
         listaGruposAdaptador.setListener(new ListaGruposAdaptador.Listener() {
             @Override
+            public void verDetalles(GruposItem grupo) {
+                Intent detallesGrupo = new Intent(getApplicationContext(),DetallesGrupoActivity.class);
+                detallesGrupo.putExtra("materia",grupo.getMateria());
+                detallesGrupo.putExtra("clavemateria",grupo.getClavemateria());
+                detallesGrupo.putExtra("grupo",grupo.getGrupo());
+                detallesGrupo.putExtra("hLunes",grupo.getHoralunes());
+                detallesGrupo.putExtra("hMartes",grupo.getHoramartes());
+                detallesGrupo.putExtra("hMiercoles",grupo.getHoramiercoles());
+                detallesGrupo.putExtra("hJueves",grupo.getHorajueves());
+                detallesGrupo.putExtra("hViernes",grupo.getHoraviernes());
+                startActivity(detallesGrupo);
+            }
+
+            @Override
             public void abreLista(String materia, String grupo) {
                 Intent listaAlumnos = new Intent(getApplicationContext(), MainActivity.class);
                 listaAlumnos.putExtra("usuario",usuario);

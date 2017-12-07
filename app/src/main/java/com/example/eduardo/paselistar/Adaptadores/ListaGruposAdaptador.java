@@ -26,6 +26,7 @@ public class ListaGruposAdaptador extends RecyclerView.Adapter<ListaGruposAdapta
     public interface Listener{
 
         void abreLista(String materia, String grupo);
+        void verDetalles(GruposItem grupo);
     }
 
     public ListaGruposAdaptador(Context context){
@@ -42,6 +43,7 @@ public class ListaGruposAdaptador extends RecyclerView.Adapter<ListaGruposAdapta
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.objeto_grupo,parent,false);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +51,16 @@ public class ListaGruposAdaptador extends RecyclerView.Adapter<ListaGruposAdapta
                     GruposItem g = dataset.get((int)v.getTag());
                     listener.abreLista(g.getClavemateria(),g.getGrupo());
                 }
+            }
+        });
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(listener!=null){
+                    GruposItem g = dataset.get((int)v.getTag());
+                    listener.verDetalles(g);
+                }
+                return true;
             }
         });
 
