@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.eduardo.paselistar.modelos.AlumnosItem;
 import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
+import com.example.eduardo.paselistar.modelos.ClasesRespuesta;
+import com.example.eduardo.paselistar.modelos.GruposItem;
 import com.example.eduardo.paselistar.modelos.LoginRespuesta;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class ApiRetrofit {
     public Retrofit retrofit;
     final PaseListaApiServicio servicio;
     public ArrayList<AlumnosItem> alumnos;
+
     public ApiRetrofit(){
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://itculiacan.edu.mx/dadm/apipaselista/data/")
@@ -35,16 +38,14 @@ public class ApiRetrofit {
         servicio = retrofit.create(PaseListaApiServicio.class);
     }
 
-    public void obtenerListaAlumnos(final ServiceCallBack serviceCallBack) {
-        //PaseListaApiServicio servicio = retrofit.create(PaseListaApiServicio.class);
-        //?usuario=920&usuariovalida=&periodoactual=&materia=&grupo=7A
+    public void obtenerListaAlumnos(String usuario, String token, String periodo, String materia, String grupo, final ServiceCallBack serviceCallBack) {
 
         Call<AlumnosRespuesta> listaAlumnosRespuesta = servicio.obtenerListaAlumnos(
-                "920",
-                "49nc8Eznl4dnU",
-                "2173",
-                "AEB1011",
-                "7A");
+                usuario,
+                token,
+                periodo,
+                materia,
+                grupo);
 
         listaAlumnosRespuesta.enqueue(new Callback<AlumnosRespuesta>() {
             @Override
@@ -61,10 +62,10 @@ public class ApiRetrofit {
         });
     }
 
-    public void login(final ServiceCallBack serviceCallBack){
+    public void login(String usuario, String clave, final ServiceCallBack serviceCallBack){
         Call<LoginRespuesta> loginRespuestaCall = servicio.loginUsuario(
-                "920",
-                "12345678"
+                usuario,
+                clave
         );
 
         loginRespuestaCall.enqueue(new Callback<LoginRespuesta>() {
@@ -82,6 +83,31 @@ public class ApiRetrofit {
             }
         });
     }
+
+    public void obtenerListaGrupos(String usuario, String token, String periodo, final ServiceCallBack serviceCallBack){
+
+        Call<ClasesRespuesta> clasesRespuestaCall = servicio.obtenerlistaGrupos(
+                "920",
+                "49nc8Eznl4dnU",
+                "2173"
+        );
+
+        clasesRespuestaCall.enqueue(new Callback<ClasesRespuesta>() {
+            @Override
+            public void onResponse(Call<ClasesRespuesta> call, Response<ClasesRespuesta> response) {
+                if (response.isSuccessful()){
+                    ClasesRespuesta listaClases = response.body();
+                    ArrayList<GruposItem> clases = new ArrayList<>();
+                    clases = listaClases.getGrupos();
+                    serviceCallBack.respuestaRecibida(clases);
+                } else { Log.e(TAG," onResponse " + response.errorBody()); }
+            }
+
+            @Override
+            public void onFailure(Call<ClasesRespuesta> call, Throwable t) { serviceCallBack.fail(t); }
+        });
+    }
+
 
     public interface ServiceCallBack {
         void respuestaRecibida(Object respuesta);

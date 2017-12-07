@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.eduardo.paselistar.apiPaseLista.ApiRetrofit;
+import com.example.eduardo.paselistar.modelos.GruposItem;
 import com.example.eduardo.paselistar.modelos.LoginRespuesta;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,13 +32,18 @@ public class LoginActivity extends AppCompatActivity {
         api = new ApiRetrofit();
 
     }
-    private void loginUsuario(final Context context, String usuario, String clave){
-        api.login(new ApiRetrofit.ServiceCallBack() {
+    private void loginUsuario(final Context context, final String usuario, String clave){
+        api.login(usuario,clave,new ApiRetrofit.ServiceCallBack() {
             @Override
             public void respuestaRecibida(Object respuesta) {
                 LoginRespuesta login = (LoginRespuesta)respuesta;
                 if(login.isRespuesta()){
-                    Intent lista = new Intent(context, MainActivity.class);
+                    Intent lista = new Intent(context, GruposActivity.class);
+                    String token = login.getUsuariovalida();
+                    String periodoactual = login.getPeriodoactual();
+                    lista.putExtra("usuario",usuario);
+                    lista.putExtra("token",token);
+                    lista.putExtra("periodoactual",periodoactual);
                     startActivity(lista);
                 }
             }

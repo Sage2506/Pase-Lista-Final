@@ -6,30 +6,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.eduardo.paselistar.Adaptadores.ListaAlumnosAdaptador;
 import com.example.eduardo.paselistar.apiPaseLista.ApiRetrofit;
-import com.example.eduardo.paselistar.apiPaseLista.PaseListaApiServicio;
 import com.example.eduardo.paselistar.modelos.AlumnosItem;
-import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
-    private Retrofit retrofit;
-
     private RecyclerView recyclerView;
     private ListaAlumnosAdaptador listaAlumnosAdaptador;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +31,16 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
 
+        //usuario=920&usuariovalida=49nc8Eznl4dnU&periodoactual=2173&materia=AEB1011&grupo=7A
+        String usuario = getIntent().getStringExtra("usuario");
+        String token = getIntent().getStringExtra("token");
+        String periodoactual= getIntent().getStringExtra("periodoactual");
+        String materia = getIntent().getStringExtra("materia");
+        String grupo= getIntent().getStringExtra("grupo");
+
 
         ApiRetrofit api = new ApiRetrofit();
-        api.obtenerListaAlumnos(new ApiRetrofit.ServiceCallBack() {
+        api.obtenerListaAlumnos(usuario, token, periodoactual, materia, grupo ,new ApiRetrofit.ServiceCallBack() {
             @Override
             public void respuestaRecibida(Object respuesta) {
                 listaAlumnosAdaptador.agregarListaAlumnos((ArrayList<AlumnosItem>)respuesta);

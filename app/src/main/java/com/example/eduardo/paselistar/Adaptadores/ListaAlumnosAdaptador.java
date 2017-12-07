@@ -1,4 +1,4 @@
-package com.example.eduardo.paselistar;
+package com.example.eduardo.paselistar.Adaptadores;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.eduardo.paselistar.R;
 import com.example.eduardo.paselistar.modelos.AlumnosItem;
 
 import java.util.ArrayList;

@@ -1,21 +1,22 @@
 package com.example.eduardo.paselistar.modelos;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class ClasesRespuesta{
 
 	@SerializedName("grupos")
-	private List<GruposItem> grupos;
+	private ArrayList<GruposItem> grupos;
 
 	@SerializedName("respuesta")
 	private boolean respuesta;
 
-	public void setGrupos(List<GruposItem> grupos){
+	public void setGrupos(ArrayList<GruposItem> grupos){
 		this.grupos = grupos;
 	}
 
-	public List<GruposItem> getGrupos(){
+	public ArrayList<GruposItem> getGrupos(){
 		return grupos;
 	}
 
