@@ -31,6 +31,18 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
 
+        listaAlumnosAdaptador.setListener(new ListaAlumnosAdaptador.Listener() {
+            @Override
+            public void detallesAlumno(AlumnosItem alumno) {
+                //TODO: aqui poner lo que va a hacer en long click
+            }
+
+            @Override
+            public void marcaDesmarcaFalta(AlumnosItem alumnos) {
+                //TODO: aqui poner lo que va a hacer en click
+            }
+        });
+
         //usuario=920&usuariovalida=49nc8Eznl4dnU&periodoactual=2173&materia=AEB1011&grupo=7A
         String usuario = getIntent().getStringExtra("usuario");
         String token = getIntent().getStringExtra("token");

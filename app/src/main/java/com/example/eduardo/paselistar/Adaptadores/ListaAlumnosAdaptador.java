@@ -1,6 +1,7 @@
 package com.example.eduardo.paselistar.Adaptadores;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,15 @@ import java.util.ArrayList;
 public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdaptador.ViewHolder> {
     private ArrayList<AlumnosItem> dataset;
     private Context context;
+    private Listener listener;
+
+    public interface Listener{
+        void detallesAlumno(AlumnosItem alumno);
+        void marcaDesmarcaFalta(AlumnosItem alumnos);
+
+    }
+
+    public void setListener(Listener listener){ this.listener=listener;};
 
     public ListaAlumnosAdaptador(Context context){
         this.context = context;
@@ -38,7 +48,25 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.objeto_alumno,parent,false);
-
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listener!=null){
+                    AlumnosItem a =dataset.get((int)view.getTag());
+                    listener.marcaDesmarcaFalta(a);
+                }
+            }
+        });
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if(listener!=null){
+                    AlumnosItem a =dataset.get((int)view.getTag());
+                    listener.detallesAlumno(a);
+                }
+                return false;
+            }
+        });
         return new ViewHolder(view);
     }
 
@@ -52,6 +80,7 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
         .crossFade()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(holder.fotoImageView);
+        holder.cardView.setTag(position);
 
     }
 
@@ -63,12 +92,14 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
     public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView fotoImageView;
         private TextView nombreTextView;
+        private CardView cardView;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             fotoImageView = (ImageView) itemView.findViewById(R.id.imageView);
             nombreTextView = (TextView) itemView.findViewById(R.id.tvNombre);
+            cardView = (CardView) itemView;
         }
 }
 
