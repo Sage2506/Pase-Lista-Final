@@ -15,6 +15,7 @@
         android:layout_weight="8.8"
         />
     <Button
+        android:id="@+id/btn_accept"
         android:text="Terminar"
         android:textSize="18dp"
         android:layout_width="match_parent"

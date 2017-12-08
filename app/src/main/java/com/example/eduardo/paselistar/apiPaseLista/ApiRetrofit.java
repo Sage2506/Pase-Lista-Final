@@ -7,6 +7,7 @@ import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
 import com.example.eduardo.paselistar.modelos.ClasesRespuesta;
 import com.example.eduardo.paselistar.modelos.GruposItem;
 import com.example.eduardo.paselistar.modelos.LoginRespuesta;
+import com.example.eduardo.paselistar.modelos.RespuestaSimple;
 
 import java.util.ArrayList;
 
@@ -106,6 +107,33 @@ public class ApiRetrofit {
             @Override
             public void onFailure(Call<ClasesRespuesta> call, Throwable t) { serviceCallBack.fail(t); }
         });
+    }
+    public void ponerFaltaAsistencia(String usuario, String token, String periodo, String materia, String grupo, final String nc, final String incidencia){
+            Call<RespuestaSimple> respuestaSimpleCall = servicio.asignaIncidencia(
+                    usuario,
+                    token,
+                    periodo,
+                    materia,
+                    grupo,
+                    nc,
+                    incidencia
+            );
+            respuestaSimpleCall.enqueue(new Callback<RespuestaSimple>() {
+                @Override
+                public void onResponse(Call<RespuestaSimple> call, Response<RespuestaSimple> response) {
+                    if(response.isSuccessful()){
+                        if( ((RespuestaSimple)response.body()).isRespuesta() ){
+                            Log.i(TAG,"a "+nc+" se le asignó: "+incidencia);
+                        }
+                    }
+                    else {Log.e(TAG,response.errorBody().toString());}
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaSimple> call, Throwable t) {
+                    Log.e(TAG," onFailure "+t.toString());
+                }
+            });
     }
 
 

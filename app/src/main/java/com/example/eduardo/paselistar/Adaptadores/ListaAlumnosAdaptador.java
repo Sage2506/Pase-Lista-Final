@@ -1,6 +1,8 @@
 package com.example.eduardo.paselistar.Adaptadores;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +31,7 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
 
     public interface Listener{
         void detallesAlumno(AlumnosItem alumno);
-        void marcaDesmarcaFalta(AlumnosItem alumnos);
+        void marcaDesmarcaFalta(AlumnosItem alumnos, View view);
 
     }
 
@@ -44,7 +46,9 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
         dataset.addAll(alummnos);
         notifyDataSetChanged();
     }
-
+    public ArrayList<AlumnosItem> getDataset(){
+        return dataset;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.objeto_alumno,parent,false);
@@ -53,7 +57,7 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
             public void onClick(View view) {
                 if(listener!=null){
                     AlumnosItem a =dataset.get((int)view.getTag());
-                    listener.marcaDesmarcaFalta(a);
+                    listener.marcaDesmarcaFalta(a,view);
                 }
             }
         });
@@ -80,8 +84,11 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
         .crossFade()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(holder.fotoImageView);
+        if(dataset.get(position).getAsistencia()==null || dataset.get(position).getAsistencia()=="1"){
+            holder.cardView.setCardBackgroundColor(Color.WHITE);
+        }
+        else{holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context,R.color.sayan_rose));}
         holder.cardView.setTag(position);
-
     }
 
     @Override

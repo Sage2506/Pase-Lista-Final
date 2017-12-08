@@ -28,6 +28,16 @@ public class AlumnosItem{
 	@SerializedName("nombre")
 	private String nombre;
 
+	private String asistencia;
+
+	public String getAsistencia() {
+		return asistencia;
+	}
+
+	public void setAsistencia(String asistencia) {
+		this.asistencia = asistencia;
+	}
+
 	public void setJsonMember0(String jsonMember0){
 		this.jsonMember0 = jsonMember0;
 	}
