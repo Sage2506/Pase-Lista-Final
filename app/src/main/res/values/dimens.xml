@@ -6,4 +6,8 @@
     <!-- activity detalles grupo -->
     <dimen name="textview_dia">16dp</dimen>
     <dimen name="textview_horadia">14dp</dimen>
+
+    <!-- MainActivity -->
+    <dimen name="recycler_weight">9</dimen>
+    <dimen name="button_weight">1</dimen>
 </resources>

@@ -28,8 +28,10 @@
             android:name=".LoginActivityDemo"
             android:label="@string/title_activity_login_demo" />
         <activity android:name=".GruposActivity" />
-        <activity android:name=".DetallesGrupoActivity"
-            android:parentActivityName=".GruposActivity"></activity>
+        <activity
+            android:name=".DetallesGrupoActivity"
+            android:parentActivityName=".GruposActivity" />
+        <activity android:name=".AlumnsDetailsActivity"></activity>
     </application>
 
 </manifest>

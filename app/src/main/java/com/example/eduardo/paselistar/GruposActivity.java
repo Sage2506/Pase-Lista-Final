@@ -35,6 +35,9 @@ public class GruposActivity extends AppCompatActivity {
             @Override
             public void verDetalles(GruposItem grupo) {
                 Intent detallesGrupo = new Intent(getApplicationContext(),DetallesGrupoActivity.class);
+                detallesGrupo.putExtra("usuario",usuario);
+                detallesGrupo.putExtra("token",token);
+                detallesGrupo.putExtra("periodoactual",periodo);
                 detallesGrupo.putExtra("materia",grupo.getMateria());
                 detallesGrupo.putExtra("clavemateria",grupo.getClavemateria());
                 detallesGrupo.putExtra("grupo",grupo.getGrupo());
