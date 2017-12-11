@@ -116,4 +116,10 @@ public class AlumnosItem{
 			",nombre = '" + nombre + '\'' + 
 			"}";
 		}
+	public String fullName(){
+		String name = this.getNombre()==null?"":this.getNombre();
+		String lastName = this.getApellidopaterno()==null?"":this.getApellidopaterno()+" ";
+		String lastLastName = this.getApellidomaterno()==null?"":this.getApellidomaterno()+" ";
+		return lastName+lastLastName+name;
+	}
 }

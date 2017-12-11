@@ -2,9 +2,12 @@ package com.example.eduardo.paselistar.apiPaseLista;
 
 import android.util.Log;
 
+import com.example.eduardo.paselistar.modelos.AlumnoAsistencias;
+import com.example.eduardo.paselistar.modelos.AlumnoFaltas;
 import com.example.eduardo.paselistar.modelos.AlumnosItem;
 import com.example.eduardo.paselistar.modelos.AlumnosRespuesta;
 import com.example.eduardo.paselistar.modelos.ClasesRespuesta;
+import com.example.eduardo.paselistar.modelos.FaltasAsistencias;
 import com.example.eduardo.paselistar.modelos.GruposItem;
 import com.example.eduardo.paselistar.modelos.LoginRespuesta;
 import com.example.eduardo.paselistar.modelos.RespuestaSimple;
@@ -135,7 +138,54 @@ public class ApiRetrofit {
                 }
             });
     }
+    public void getAsistencias(String user,String token,String periodo,String materia,String grupo,String ncontrol, final ServiceCallBack serviceCallBack){
+        Call<AlumnoAsistencias> alumnoAsistenciasCall = servicio.asistencias(user,token,periodo,materia,grupo,ncontrol);
+        alumnoAsistenciasCall.enqueue(new Callback<AlumnoAsistencias>() {
+            @Override
+            public void onResponse(Call<AlumnoAsistencias> call, Response<AlumnoAsistencias> response) {
+                if(response.isSuccessful()){
+                    serviceCallBack.respuestaRecibida(response.body());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<AlumnoAsistencias> call, Throwable t) {
+                serviceCallBack.fail(t);
+            }
+        });
+    }
+    public void getFaltas(String user,String token,String periodo,String materia,String grupo,String ncontrol, final ServiceCallBack serviceCallBack){
+        Call<AlumnoFaltas> alumnoFaltasCall = servicio.faltas(user,token,periodo,materia,grupo,ncontrol);
+        alumnoFaltasCall.enqueue(new Callback<AlumnoFaltas>() {
+            @Override
+            public void onResponse(Call<AlumnoFaltas> call, Response<AlumnoFaltas> response) {
+                if(response.isSuccessful()){
+                    serviceCallBack.respuestaRecibida(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AlumnoFaltas> call, Throwable t) {
+                serviceCallBack.fail(t);
+            }
+        });
+    }
+    public void getAsistenciaFalta(String user,String token,String periodo,String materia,String grupo,int opcion, final ServiceCallBack serviceCallback){
+        Call<FaltasAsistencias> faltasAsistenciasCall = opcion==1?servicio.asistenciasGrupo(user,token,periodo,materia,grupo):servicio.faltasGrupo(user,token,periodo,materia,grupo);
+        faltasAsistenciasCall.enqueue(new Callback<FaltasAsistencias>() {
+            @Override
+            public void onResponse(Call<FaltasAsistencias> call, Response<FaltasAsistencias> response) {
+                if (response.isSuccessful()){
+                    serviceCallback.respuestaRecibida(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FaltasAsistencias> call, Throwable t) {
+                 serviceCallback.fail(t);
+            }
+        });
+    }
 
     public interface ServiceCallBack {
         void respuestaRecibida(Object respuesta);

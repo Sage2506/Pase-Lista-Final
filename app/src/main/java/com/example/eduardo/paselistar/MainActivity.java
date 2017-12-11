@@ -1,5 +1,6 @@
 package com.example.eduardo.paselistar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +46,15 @@ public class MainActivity extends AppCompatActivity {
         listaAlumnosAdaptador.setListener(new ListaAlumnosAdaptador.Listener() {
             @Override
             public void detallesAlumno(AlumnosItem alumno) {
-                //TODO: Abrir un activity con los detalles del alumno
+                Intent details = new Intent(getApplicationContext(), AlumnsDetailsActivity.class);
+                details.putExtra("Nombre", alumno.fullName());
+                details.putExtra("ncontrol",alumno.getNcontrol());
+                details.putExtra("token",token);
+                details.putExtra("periodoactual",periodoactual);
+                details.putExtra("materia",materia);
+                details.putExtra("grupo",grupo);
+                details.putExtra("usuario",usuario);
+                startActivity(details);
             }
 
             @Override
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     if(a.getAsistencia()==null){a.setAsistencia("1");}
                     api.ponerFaltaAsistencia(usuario,token, periodoactual,materia,grupo,a.getNcontrol(),a.getAsistencia());
                 }
+                finish();
             }
         });
 

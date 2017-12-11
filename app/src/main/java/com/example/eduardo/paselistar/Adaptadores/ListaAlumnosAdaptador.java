@@ -77,7 +77,7 @@ public class ListaAlumnosAdaptador extends RecyclerView.Adapter<ListaAlumnosAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         AlumnosItem a = dataset.get(position);
-        holder.nombreTextView.setText(a.getApellidopaterno()+" "+a.getApellidomaterno()+" "+a.getNombre());
+        holder.nombreTextView.setText(a.fullName());
         Glide.with(context)
                 .load("http://189.202.197.43/fotos/"+a.getNcontrol()+".jpg")
         .centerCrop()

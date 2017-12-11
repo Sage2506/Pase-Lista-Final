@@ -18,6 +18,17 @@
         android:id="@+id/tvGrupo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_asistencias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Asistencias: "
+        />
+    <TextView
+        android:id="@+id/tv_faltas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Faltas: "/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

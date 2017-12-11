@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eduardo.paselistar.AlumnsDetailsActivity"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <ImageView
+        android:id="@+id/iv_profile_pic"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:srcCompat="@drawable/ic_user_logo"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:text="Nombre" />
+    <TextView
+        android:id="@+id/tv_ncontrol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Numero de Control:"/>
+
+    <TextView
+        android:id="@+id/tv_asistencias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:text="Asistencias:" />
+
+    <TextView
+        android:id="@+id/tv_faltas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:text="Faltas:" />
+</LinearLayout>
